@@ -1,4 +1,4 @@
-#include "SharedPointer.h"
+#include "shared_pointer.h"
 #include <iostream> 
 #include <vector> 
 
@@ -6,23 +6,29 @@ using namespace std;
 
 int main() {
     int* a = new int(2);
-    SharedPointer<int> sh = SharedPointer<int>(a);
-    SharedPointer<int> sh2 = SharedPointer<int>(sh);
-    shared_ptr<int> sh = shared_ptr<int>(new int(2)); 
+    {
+    SharedPointer_<int> sh = SharedPointer_<int>(a);
+    {
+    SharedPointer_<int> sh2 = SharedPointer_<int>(sh);
     cout<<(*sh)<<endl;
     cout<<(*a)<<endl;
     
-    sh.~SharedPointer();    
-    cout<<(*sh2)<<endl;
+    cout<<sh._get_count()<<endl;
+
+    }
+    cout<<(*sh)<<endl;
 
     cout<<(*a)<<endl;
 
-    vector<SharedPointer<int>> v;
-    v.push_back(sh2);
-    sh2.~SharedPointer();    
+    {
+    vector<SharedPointer_<int>> v;
+    v.push_back(sh);
     cout<<(*a)<<endl;
-
     v.pop_back();
+
+    }
+    }    
+
     cout<<(*a)<<endl;
     return 0;
 }
