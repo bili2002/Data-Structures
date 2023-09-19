@@ -5,12 +5,12 @@
 #include "weak_pointer.h"
 
 
-template <typename T> //TO ADD DELETER, ALLOCATOR
+template<typename T> //TO ADD DELETER, ALLOCATOR
 class SharedPointer_ {
-    template <typename U>
+    template<typename U>
     friend class WeakPointer_;
 
-    template <typename U>
+    template<typename U>
     friend class SharedPointer_;
 
 protected:

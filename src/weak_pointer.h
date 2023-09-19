@@ -4,12 +4,12 @@
 #include "control_block.h"
 #include "shared_pointer.h"
 
-template <typename T> 
+template<typename T> 
 class WeakPointer_ {
-    template <typename U>
+    template<typename U>
     friend class WeakPointer_;
 
-    template <typename U>
+    template<typename U>
     friend class SharedPointer_;
 
 protected:
