@@ -1,3 +1,4 @@
+#include "utility.h"
 #include "shared_pointer.h"
 #include <iostream> 
 #include <vector> 
@@ -6,6 +7,9 @@ using namespace std;
 
 int main() {
     int* a = new int(2);
+    {
+    WeakPointer_<int> wk;
+
     {
     SharedPointer_<int> sh = SharedPointer_<int>(a);
     {
@@ -27,7 +31,14 @@ int main() {
     v.pop_back();
 
     }
+
+    wk = WeakPointer_(sh);
+    cout<<wk.expired()<<endl;
+    SharedPointer_<int> sh5 = wk.lock();
     }    
+    cout<<wk.expired()<<endl;
+    }
+
 
     cout<<(*a)<<endl;
     return 0;

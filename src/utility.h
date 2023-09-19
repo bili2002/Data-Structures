@@ -1,4 +1,5 @@
 #pragma once
+
 #include <type_traits>
 
 using size_t_ = unsigned int;
@@ -11,3 +12,7 @@ template <typename T>
 decltype(auto) move_(T&& arg) {
   return static_cast<remove_reference_t_<T>&&>(arg);
 }
+
+
+template <typename T> class SharedPointer_;
+template <typename T> class WeakPointer_;

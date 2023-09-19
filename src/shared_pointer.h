@@ -1,14 +1,23 @@
+#pragma once
+
 #include "utility.h"
 #include "control_block.h"
-
-#include <iostream>
+#include "weak_pointer.h"
 
 
 template <typename T> //TO ADD DELETER, ALLOCATOR
 class SharedPointer_ {
+    template <typename U>
+    friend class WeakPointer_;
+
+    template <typename U>
+    friend class SharedPointer_;
+
+protected:
     T* ptr;
     ControlBlock_* controlBlock;
 
+private:
     void _copy(const SharedPointer_<T>& oth) noexcept {
         this->ptr = oth.ptr;
         this->controlBlock = oth.controlBlock;
@@ -25,6 +34,10 @@ class SharedPointer_ {
     }
 
     void _destruct() {
+        if (this->controlBlock == nullptr) {
+            return;
+        }
+        
         this->controlBlock->remove_shared();
 
         if (this->controlBlock->get_shared() == 0) {
@@ -52,8 +65,15 @@ public:
         this->_copy(oth);
     }
 
-    SharedPointer_(SharedPointer_<T>&& oth) noexcept{
+    SharedPointer_(SharedPointer_<T>&& oth) noexcept {
         this->_move(move_(oth));
+    }
+
+    SharedPointer_(const WeakPointer_<T>& weak_ptr) noexcept {
+        this->ptr = weak_ptr.ptr;
+        this->controlBlock = weak_ptr.controlBlock;
+
+        this->controlBlock->add_shared();
     }
 
     SharedPointer_& operator=(const SharedPointer_<T>& oth) noexcept {
@@ -89,7 +109,8 @@ public:
     }
 
 
-    size_t_ _get_count() const noexcept {//testing
+public: //for testing
+    size_t_ _get_count() const noexcept {
         return this->controlBlock->get_shared();
     }
 };
