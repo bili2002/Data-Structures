@@ -25,7 +25,7 @@ private:
         this->controlBlock->add_shared();
     }
 
-    void _move(SharedPointer_<T>&& oth) {
+    void _move(SharedPointer_<T>&& oth) noexcept {
         this->ptr = oth.ptr;
         this->controlBlock = oth.controlBlock;
 
@@ -33,7 +33,7 @@ private:
         oth.controlBlock = nullptr;
     }
 
-    void _destruct() {
+    void _destruct() noexcept {
         if (this->controlBlock == nullptr) {
             return;
         }

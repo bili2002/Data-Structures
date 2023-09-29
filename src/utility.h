@@ -13,6 +13,12 @@ decltype(auto) move_(T&& arg) {
   return static_cast<remove_reference_t_<T>&&>(arg);
 }
 
+template<typename T>
+void swap(T& l, T& r) {
+  T temp = move_(l);
+  l = move_(r);
+  r = move_(temp);
+}
 
 template<typename T> class SharedPointer_;
 template<typename T> class WeakPointer_;

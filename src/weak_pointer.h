@@ -91,7 +91,7 @@ public:
         return this->controlBlock->get_shared() == 0;
     }
 
-    SharedPointer_<T> lock() {//?!
+    SharedPointer_<T> lock() const {//?!
         if (this->expired()) {
             throw("WeakPointer_ used when expired.");
         }
